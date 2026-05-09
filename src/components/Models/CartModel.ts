@@ -1,7 +1,7 @@
-import { IProduct } from '../../../types';
+import { IProduct } from '../../types';
 
 export class CartModel {
-  items: IProduct[] = [];
+  protected items: IProduct[] = [];
 
   getItems(): IProduct[] {
     return this.items;

@@ -1,8 +1,8 @@
-import {IProduct} from '../../../types';
+import {IProduct} from '../../types';
 
 export class ProductsModel {
-  items: IProduct[] = [];
-  selectedProduct: IProduct | null = null;
+  protected items: IProduct[] = [];
+  protected selectedProduct: IProduct | null = null;
 
   setItems(items: IProduct[]): void {
     this.items = items;

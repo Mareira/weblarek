@@ -1,10 +1,10 @@
-import { Api } from './base/Api';
+import { IApi, IProductsResponse } from '../types';
 
 export class LarekApi {
-  constructor(private api: Api) {}
+  constructor(private api: IApi) {}
 
   // GET /product — получить товары с сервера
-  getProducts() {
+  getProducts(): Promise<IProductsResponse> {
     return this.api.get('/product');
   }
 

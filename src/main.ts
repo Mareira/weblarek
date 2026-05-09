@@ -1,9 +1,9 @@
 import './scss/styles.scss';
 import { Api } from './components/base/Api';
 import { LarekApi } from './components/LarekApi';
-import { ProductsModel } from './components/base/Models/ProductsModel';
-import { CartModel } from './components/base/Models/CartModel';
-import { BuyerModel } from './components/base/Models/BuyerModel';
+import { ProductsModel } from './components/Models/ProductsModel';
+import { CartModel } from './components/Models/CartModel';
+import { BuyerModel } from './components/Models/BuyerModel';
 import { API_URL } from './utils/constants';
 import { apiProducts } from './utils/data';
 

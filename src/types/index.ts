@@ -14,7 +14,7 @@ export interface IProduct {
   price: number | null;
 }
 
-export type TPayment = 'cash' | 'card' | '';
+export type TPayment = 'cash' | 'card' | null;
 
 export interface IBuyer {
   payment: TPayment;
@@ -22,4 +22,13 @@ export interface IBuyer {
   phone: string;
   address: string;
 }
+
+// Ответ сервера при GET /product
+export interface IProductsResponse {
+  items: IProduct[];
+  total: number;
+}
+
+// Тип для ошибок валидации полей покупателя
+export type TBuyerValidationErrors = Partial<Record<keyof IBuyer, string>>;
 
