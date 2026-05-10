@@ -114,7 +114,7 @@ interface IProduct {
   price: number | null; // цена (null если товар нельзя купить)
 }
 
-type TPayment = 'cash' | 'card' | '';  // наличные или карта
+type TPayment = 'cash' | 'card' | null;  // наличные или карта
 
 interface IBuyer {
   payment: TPayment;  // способ оплаты
@@ -147,7 +147,7 @@ interface IBuyer {
 Поля класса:
 `items: IProduct[]` — массив товаров в корзине
 
-**Методы класса:**
+Методы класса:
 `getItems(): IProduct[]` — возвращает все товары в корзине
 `addItem(product: IProduct): void` — добавляет товар (если его ещё нет)
 `removeItem(id: string): void` — удаляет товар по id
@@ -169,17 +169,21 @@ interface IBuyer {
 `setData(data: Partial<IBuyer>): void` — сохраняет данные (можно частично, например только email)
 `getData(): IBuyer` — возвращает все данные покупателя
 `clear(): void` — очищает все поля
-`validate(): Partial<Record<keyof IBuyer, string>>` — проверяет заполненность полей, возвращает объект с ошибками (например, `{ payment: "Не выбран вид оплаты" }`)
+`validate(): TBuyerValidationErrors` — проверяет заполненность полей, возвращает объект с ошибками (например, `{ payment: "Не выбран вид оплаты" }`)
+
 
 ## Слой коммуникации
 
 ### LarekApi
 
-Назначение: взаимодействие с API сервера.
+Взаимодействие с API сервера.
 
-Конструктор: принимает `api: IApi` (экземпляр класса Api)
+Конструктор:
+`constructor(api: IApi)` — принимает объект, реализующий интерфейс IApi (методы get и post)
 
-Методы:
+Поля класса:
+`api: IApi` — экземпляр класса Api для выполнения HTTP-запросов
 
-- `getProducts()` — GET запрос на `/product`, возвращает объект с массивом товаров
-- `sendOrder(order)` — POST запрос на `/order`, отправляет данные заказа
+Методы класса:
+`getProducts(): Promise<IProductsResponse>` — GET запрос на `/product`, возвращает промис с объектом, содержащим массив товаров и общее количество
+`sendOrder(order: IOrder): Promise<IOrderResult>` — POST запрос на `/order`, принимает объект заказа и возвращает промис с результатом оформления заказа

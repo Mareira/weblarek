@@ -29,7 +29,7 @@ export class BuyerModel {
     this.address = '';
   }
 
-  validate(): Partial<Record<keyof IBuyer, string>> {
+  validate(): TBuyerValidationErrors {
     const errors: TBuyerValidationErrors = {};
     
     if (!this.payment) errors.payment = 'Не выбран вид оплаты';
