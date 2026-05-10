@@ -29,14 +29,10 @@ export interface IProductsResponse {
   total: number;
 }
 
-// Данные для отправки заказа на сервер (POST /order)
-export interface IOrder {
-    items: string[];    // массив ID товаров
-    payment: TPayment;  // способ оплаты ('cash', 'card' или null)
-    email: string;
-    phone: string;
-    address: string;
-    total: number;      // итоговая сумма заказа
+// IOrder расширяет IBuyer, наследуя все поля
+export interface IOrder extends IBuyer {
+  items: string[];
+  total: number;
 }
 
 // Ответ сервера после успешного создания заказа (POST /order)
