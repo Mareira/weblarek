@@ -1,41 +1,65 @@
 import { IBuyer, TPayment, TBuyerValidationErrors } from '../../types';
+import { EventEmitter } from '../base/Events';
 
 export class BuyerModel {
-  protected payment: TPayment | null = null;
-  protected email: string = '';
-  protected phone: string = '';
-  protected address: string = '';
+  protected _payment: TPayment = null;
+  protected _email: string = '';
+  protected _phone: string = '';
+  protected _address: string = '';
+
+  constructor(protected events: EventEmitter) {}
 
   setData(data: Partial<IBuyer>): void {
-    if (data.payment !== undefined) this.payment = data.payment;
-    if (data.email !== undefined) this.email = data.email;
-    if (data.phone !== undefined) this.phone = data.phone;
-    if (data.address !== undefined) this.address = data.address;
+    let changed = false;
+    
+    if (data.payment !== undefined && this._payment !== data.payment) {
+      this._payment = data.payment;
+      changed = true;
+    }
+    if (data.email !== undefined && this._email !== data.email) {
+      this._email = data.email;
+      changed = true;
+    }
+    if (data.phone !== undefined && this._phone !== data.phone) {
+      this._phone = data.phone;
+      changed = true;
+    }
+    if (data.address !== undefined && this._address !== data.address) {
+      this._address = data.address;
+      changed = true;
+    }
+    
+    if (changed) {
+      this.events.emit('buyer:changed', { data: this.getData() });
+      this.events.emit('buyer:validationChanged', { errors: this.validate() });
+    }
   }
 
   getData(): IBuyer {
     return {
-      payment: this.payment,
-      email: this.email,
-      phone: this.phone,
-      address: this.address,
+      payment: this._payment,
+      email: this._email,
+      phone: this._phone,
+      address: this._address,
     };
   }
 
   clear(): void {
-    this.payment = null;
-    this.email = '';
-    this.phone = '';
-    this.address = '';
+    this._payment = null;
+    this._email = '';
+    this._phone = '';
+    this._address = '';
+    this.events.emit('buyer:changed', { data: this.getData() });
+    this.events.emit('buyer:validationChanged', { errors: this.validate() });
   }
 
   validate(): TBuyerValidationErrors {
     const errors: TBuyerValidationErrors = {};
     
-    if (!this.payment) errors.payment = 'Не выбран вид оплаты';
-    if (!this.email) errors.email = 'Укажите email';
-    if (!this.phone) errors.phone = 'Укажите телефон';
-    if (!this.address) errors.address = 'Укажите адрес';
+    if (!this._payment) errors.payment = 'Не выбран вид оплаты';
+    if (!this._email) errors.email = 'Укажите email';
+    if (!this._phone) errors.phone = 'Укажите телефон';
+    if (!this._address) errors.address = 'Укажите адрес';
     
     return errors;
   }
