@@ -31,7 +31,6 @@ export class BuyerModel {
     
     if (changed) {
       this.events.emit('buyer:changed', { data: this.getData() });
-      this.events.emit('buyer:validationChanged', { errors: this.validate() });
     }
   }
 
@@ -50,7 +49,6 @@ export class BuyerModel {
     this._phone = '';
     this._address = '';
     this.events.emit('buyer:changed', { data: this.getData() });
-    this.events.emit('buyer:validationChanged', { errors: this.validate() });
   }
 
   validate(): TBuyerValidationErrors {

@@ -1,7 +1,7 @@
-import { CardBase, ICardActions } from './CardBase';
+import { CardItem } from './CardItem';
 
-export class CardCatalog extends CardBase {
-  constructor(container: HTMLElement, actions?: ICardActions) {
+export class CardCatalog extends CardItem {
+  constructor(container: HTMLElement, actions?: { onClick: () => void }) {
     super(container, actions);
   }
 }

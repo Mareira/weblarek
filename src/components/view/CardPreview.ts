@@ -1,6 +1,7 @@
-import { CardBase, ICardActions } from './CardBase';
+import { CardItem } from './CardItem';
+import { ICardActions } from './CardBase';
 
-export class CardPreview extends CardBase {
+export class CardPreview extends CardItem {
   protected _description: HTMLElement;
 
   constructor(container: HTMLElement, actions?: ICardActions) {

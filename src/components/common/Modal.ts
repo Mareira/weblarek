@@ -1,4 +1,5 @@
 import { Component } from '../base/Component';
+import { ensureElement } from '../../utils/utils';
 
 export class Modal extends Component<{ title: string; content: HTMLElement }> {
   protected _closeButton: HTMLButtonElement;
@@ -7,9 +8,9 @@ export class Modal extends Component<{ title: string; content: HTMLElement }> {
 
   constructor(container: HTMLElement) {
     super(container);
-    this._container = container.querySelector('.modal__container') as HTMLElement;
-    this._closeButton = container.querySelector('.modal__close') as HTMLButtonElement;
-    this._content = container.querySelector('.modal__content') as HTMLElement;
+    this._container = ensureElement('.modal__container', container);
+    this._closeButton = ensureElement<HTMLButtonElement>('.modal__close', container);
+    this._content = ensureElement('.modal__content', container);
 
     this._closeButton.addEventListener('click', () => this.close());
     this.container.addEventListener('click', (e) => {
@@ -19,16 +20,17 @@ export class Modal extends Component<{ title: string; content: HTMLElement }> {
 
   open(): void {
     this.container.classList.add('modal_active');
+    document.body.classList.add('modal-open');
   }
 
   close(): void {
     this.container.classList.remove('modal_active');
+    document.body.classList.remove('modal-open');
     this._content.innerHTML = '';
   }
 
   set title(value: string) {
-    // В твоей вёрстке заголовок может быть внутри модалки
-    const titleElement = this._container?.querySelector('.modal__title');
+    const titleElement = this._container.querySelector('.modal__title');
     if (titleElement) titleElement.textContent = value;
   }
 
