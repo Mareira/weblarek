@@ -1,10 +1,9 @@
-import { CardItem } from './CardItem';
-import { ICardActions } from './CardBase';
+import { CardItem, ICardItemActions } from './CardItem';
 
 export class CardPreview extends CardItem {
   protected _description: HTMLElement;
 
-  constructor(container: HTMLElement, actions?: ICardActions) {
+  constructor(container: HTMLElement, actions?: ICardItemActions) {
     super(container, actions);
     this._description = container.querySelector('.card__text') as HTMLElement;
   }

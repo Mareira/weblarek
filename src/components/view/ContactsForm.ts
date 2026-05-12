@@ -27,7 +27,7 @@ export class ContactsForm extends Form<IContactsFormData> {
     });
   }
 
-  getData(): IContactsFormData {
+  protected getData(): IContactsFormData {
     return {
       email: this._emailInput.value,
       phone: this._phoneInput.value,

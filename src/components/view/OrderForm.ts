@@ -33,7 +33,7 @@ export class OrderForm extends Form<IOrderFormData> {
     });
   }
 
-  getData(): IOrderFormData {
+  protected getData(): IOrderFormData {
     let selectedPayment: TPayment = null;
     this._paymentButtons.forEach(button => {
       if (button.classList.contains('button_alt-active')) {

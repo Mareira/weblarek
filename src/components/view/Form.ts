@@ -18,7 +18,8 @@ export abstract class Form<T> extends Component<T> {
     });
   }
 
-  abstract getData(): T;
+  // Метод должен быть protected, чтобы наследники могли его переопределить
+  protected abstract getData(): T;
 
   set valid(value: boolean) {
     this._submitButton.disabled = !value;
